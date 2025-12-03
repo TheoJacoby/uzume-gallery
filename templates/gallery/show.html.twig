@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ painting.title }} - Uzume Gallery{% endblock %}
+
+{% block body %}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0" style="overflow: hidden;">
+                {% if painting.imageName %}
+                    <img src="{{ vich_uploader_asset(painting, 'imageFile') }}" class="img-fluid" alt="{{ painting.title }}" style="width: 100%; max-height: 70vh; object-fit: contain; background: #f8f9fa;">
+                {% else %}
+                    <img src="{{ asset('images/paintings/1.jpeg') }}" class="img-fluid" alt="{{ painting.title }}" style="width: 100%; max-height: 70vh; object-fit: cover;">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 h-100" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);">
+                <div class="card-body p-4">
+                    <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">{{ painting.title }}</h1>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge" style="background: var(--primary-gradient); padding: 0.5rem 1rem; margin-right: 1rem;">{{ painting.category.name }}</span>
+                            <small class="text-muted">{{ painting.created|date('d/m/Y') }}</small>
+                        </div>
+                        <div class="mb-3">
+                            <strong style="color: #667eea;">Techniques :</strong>
+                            <div class="mt-2">
+                                {% for technique in painting.techniques %}
+                                    <span class="badge bg-light text-dark me-2 mb-2" style="border: 1px solid #e2e8f0;">{{ technique.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                            <strong style="color: #667eea;">Dimensions :</strong>
+                            <p class="mb-0">{{ painting.width }} cm × {{ painting.height }} cm</p>
+                        </div>
+                    </div>
+                    <hr style="border-color: rgba(102, 126, 234, 0.2);">
+                    <div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Description</h3>
+                        <p style="line-height: 1.8; color: #4a5568;">{{ painting.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);">
+                <div class="card-body p-4">
+                    <h2 class="mb-4">💬 Commentaires</h2>
+                    
+                    {% if comments|length > 0 %}
+                        <div class="mb-4">
+                            {% for comment in comments %}
+                                <div class="card mb-3 border-0" style="background: rgba(102, 126, 234, 0.05);">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div style="font-size: 1.2rem;">
+                                                {% for i in 1..5 %}
+                                                    {% if i <= comment.rating %}
+                                                        <span style="color: #fbbf24;">⭐</span>
+                                                    {% else %}
+                                                        <span style="color: #e2e8f0;">☆</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <small class="text-muted">{{ comment.createdAt|date('d/m/Y H:i') }}</small>
+                                        </div>
+                                        <p class="card-text mb-0" style="line-height: 1.6; color: #4a5568;">{{ comment.content }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">💭</div>
+                            <p class="text-muted">Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
+                        </div>
+                    {% endif %}
+
+                    <hr style="border-color: rgba(102, 126, 234, 0.2); margin: 2rem 0;">
+
+                    <h3 class="mb-4">Ajouter un commentaire</h3>
+                    {{ form_start(form, {'attr': {'class': 'mt-3'}}) }}
+                        <div class="mb-4">
+                            {{ form_label(form.content, null, {'label_attr': {'class': 'form-label fw-bold', 'style': 'color: #667eea;'}}) }}
+                            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                            {{ form_errors(form.content) }}
+                        </div>
+                        <div class="mb-4">
+                            {{ form_label(form.rating, null, {'label_attr': {'class': 'form-label fw-bold', 'style': 'color: #667eea;'}}) }}
+                            {{ form_widget(form.rating, {'attr': {'class': 'form-control', 'min': 1, 'max': 5}}) }}
+                            {{ form_errors(form.rating) }}
+                        </div>
+                        <button type="submit" class="btn btn-primary px-5">Publier le commentaire →</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

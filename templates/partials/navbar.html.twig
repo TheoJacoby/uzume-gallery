@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <span style="font-size: 1.8rem; margin-right: 0.5rem;">🎋</span>
+            <span>Uzume Gallery</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_gallery') }}">Galerie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_about') }}">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_team') }}">Équipe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+                </li>
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_painting_index') }}">Administration</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if app.user.imageName %}
+                                <img src="{{ vich_uploader_asset(app.user, 'imageFile') }}" alt="{{ app.user.getFullName() }}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin-right: 0.5rem; border: 2px solid var(--japanese-red);">
+                            {% else %}
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--japanese-red); color: white; display: flex; align-items: center; justify-content: center; margin-right: 0.5rem; font-size: 0.8rem; font-weight: bold;">
+                                    {{ app.user.firstName|first }}{{ app.user.lastName|first }}
+                                </div>
+                            {% endif %}
+                            <span>{{ app.user.getFullName() }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ path('app_user_profile') }}">Voir le profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_user_profile_edit') }}">Modifier le profil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item d-flex align-items-center ms-3">
+                        <a href="{{ path('app_login') }}" class="btn btn-outline-primary btn-sm me-2" style="border-color: var(--japanese-red); color: var(--japanese-red); border-radius: 20px; padding: 0.5rem 1.5rem; font-weight: 600; transition: all 0.3s ease; text-decoration: none;">
+                            Connexion
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a href="{{ path('app_register') }}" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%); border: none; border-radius: 20px; padding: 0.5rem 1.5rem; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3); transition: all 0.3s ease; color: white !important; text-decoration: none;">
+                            S'inscrire
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+

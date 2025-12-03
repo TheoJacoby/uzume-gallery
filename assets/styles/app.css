@@ -1,0 +1,525 @@
+/* Design moderne 2025 - Style japonais - Uzume Gallery */
+
+:root {
+    --japanese-red: #DC143C;
+    --japanese-red-dark: #C41E3A;
+    --japanese-black: #1a1a1a;
+    --japanese-cream: #F5F1E8;
+    --japanese-gold: #D4AF37;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-soft: 0 8px 32px 0 rgba(26, 26, 26, 0.15);
+    --shadow-hover: 0 15px 45px 0 rgba(220, 20, 60, 0.3);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #F5F1E8 0%, #E8E3D5 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--japanese-black);
+    position: relative;
+}
+
+/* Motif japonais subtil en arrière-plan */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(220, 20, 60, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(26, 26, 26, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+main.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+main {
+    flex: 1;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Navbar style japonais minimaliste */
+.navbar {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 2px 20px rgba(26, 26, 26, 0.08);
+    border-bottom: 2px solid var(--japanese-red);
+    padding: 1.2rem 0;
+    position: relative;
+    z-index: 1000;
+}
+
+/* Dropdown menu - z-index élevé pour être au-dessus de tout */
+.navbar .dropdown {
+    position: relative;
+    z-index: 1050;
+}
+
+.navbar .dropdown-menu {
+    z-index: 1050 !important;
+    position: absolute !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(220, 20, 60, 0.1);
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    pointer-events: auto !important;
+}
+
+.navbar .dropdown-item {
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: rgba(220, 20, 60, 0.1);
+    color: var(--japanese-red);
+}
+
+/* S'assurer que le dropdown-toggle est cliquable */
+.navbar .dropdown-toggle {
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+/* Boutons dans la navbar */
+.navbar .btn {
+    white-space: nowrap;
+}
+
+.navbar .btn-outline-primary:hover {
+    background-color: var(--japanese-red) !important;
+    color: white !important;
+    border-color: var(--japanese-red) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.navbar .btn-primary {
+    color: white !important;
+}
+
+.navbar .btn-primary:hover {
+    background: linear-gradient(135deg, var(--japanese-red-dark) 0%, var(--japanese-red) 100%) !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--japanese-black) !important;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.navbar-brand:hover {
+    color: var(--japanese-red) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--japanese-black) !important;
+    font-weight: 500;
+    margin: 0 0.3rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 4px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--japanese-red);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 80%;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--japanese-red) !important;
+}
+
+/* Cards - PAS d'animation hover sauf pour les œuvres */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Animation hover UNIQUEMENT pour les cartes d'œuvres */
+.painting-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.painting-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--japanese-red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.painting-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.painting-card:hover::before {
+    transform: scaleX(1);
+}
+
+.painting-card .card-img-top {
+    transition: transform 0.5s ease;
+}
+
+.painting-card:hover .card-img-top {
+    transform: scale(1.08);
+}
+
+/* Boutons style japonais */
+.btn {
+    border-radius: 6px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--japanese-red);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--japanese-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+    color: white;
+}
+
+.btn-success {
+    background: var(--japanese-black);
+    color: white;
+    box-shadow: 0 4px 15px rgba(26, 26, 26, 0.3);
+}
+
+.btn-success:hover {
+    background: #2a2a2a;
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Carousel style japonais */
+.carousel {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 3rem;
+    border: 1px solid rgba(220, 20, 60, 0.1);
+    position: relative;
+}
+
+.carousel-item img {
+    filter: brightness(1.02) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px !important;
+    height: 50px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(15px);
+    border-radius: 50% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0.85 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(220, 20, 60, 0.3) !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.carousel-control-prev {
+    left: 20px !important;
+}
+
+.carousel-control-next {
+    right: 20px !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px !important;
+    height: 20px !important;
+    background-size: 20px 20px !important;
+    filter: brightness(0) saturate(100%) invert(18%) sepia(95%) saturate(7151%) hue-rotate(340deg) brightness(88%) contrast(86%) !important;
+    opacity: 1 !important;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 1) !important;
+    border-color: var(--japanese-red) !important;
+    transform: translateY(-50%) scale(1.1) !important;
+    box-shadow: 0 6px 25px rgba(220, 20, 60, 0.4) !important;
+}
+
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    filter: brightness(0) saturate(100%) invert(18%) sepia(95%) saturate(7151%) hue-rotate(340deg) brightness(88%) contrast(86%) !important;
+    transform: scale(1.2);
+}
+
+/* Footer style japonais */
+footer {
+    background: var(--japanese-black) !important;
+    margin-top: auto;
+    padding: 3rem 0 !important;
+    position: relative;
+    overflow: hidden;
+    border-top: 3px solid var(--japanese-red);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="japanese-grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(220,20,60,0.1)" stroke-width="0.5"/></pattern></defs><rect width="60" height="60" fill="url(%23japanese-grid)"/></svg>');
+    opacity: 0.3;
+}
+
+footer .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Alertes */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.alert-success {
+    background: rgba(220, 20, 60, 0.1);
+    border-left: 4px solid var(--japanese-red);
+    color: var(--japanese-red-dark);
+}
+
+/* Table */
+.table {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.table thead {
+    background: var(--japanese-black);
+    color: white;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(220, 20, 60, 0.05);
+}
+
+/* Formulaires */
+.form-control,
+.form-select {
+    border-radius: 6px;
+    border: 2px solid rgba(220, 20, 60, 0.2);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--japanese-red);
+    box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+}
+
+/* Titres avec style japonais */
+h1, h2, h3 {
+    color: var(--japanese-black);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h1::after,
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--japanese-red);
+}
+
+/* Badges */
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.badge.bg-success {
+    background: var(--japanese-red) !important;
+}
+
+/* Images */
+img {
+    border-radius: 8px;
+}
+
+/* Avatars équipe */
+.team-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--japanese-red);
+    margin: 0 auto 1.5rem;
+    display: block;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.2);
+}
+
+/* Animations d'entrée subtiles */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.painting-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .painting-card:hover {
+        transform: translateY(-4px);
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h1::after {
+        width: 40px;
+    }
+}
+
+/* Style pour les cartes d'équipe - pas d'animation */
+.team-card {
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    padding: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    box-shadow: 0 12px 35px rgba(26, 26, 26, 0.15);
+}
+
+/* Styles pour la pagination */
+.pagination {
+    gap: 0.5rem;
+}
+
+.pagination .page-link {
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    color: var(--japanese-red);
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.pagination .page-link:hover {
+    background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%);
+    color: white;
+    border-color: var(--japanese-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.pagination .page-item.disabled .page-link {
+    background: rgba(255, 255, 255, 0.5);
+    color: #ccc;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+    transform: none;
+    box-shadow: none;
+}

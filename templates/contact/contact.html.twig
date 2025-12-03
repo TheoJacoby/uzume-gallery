@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter - Uzume Gallery{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card border-0" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h1 class="display-5 mb-2" style="color: var(--japanese-red); font-weight: 600;">Nous contacter</h1>
+                        <p class="text-muted">Envoyez-nous un message, nous vous répondrons dans les plus brefs délais</p>
+                    </div>
+
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.firstName, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                                {{ form_widget(form.firstName, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Votre prénom'}}) }}
+                                {{ form_errors(form.firstName) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_label(form.lastName, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                                {{ form_widget(form.lastName, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Votre nom'}}) }}
+                                {{ form_errors(form.lastName) }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.email, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'votre.email@exemple.com'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.subject, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.subject, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Sujet de votre message'}}) }}
+                            {{ form_errors(form.subject) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.message, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Votre message...'}}) }}
+                            {{ form_errors(form.message) }}
+                            <small class="form-text text-muted">Minimum 15 caractères</small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            {{ form_widget(form.recaptcha) }}
+                            {{ form_errors(form.recaptcha) }}
+                        </div>
+                        
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-lg" style="background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%); color: white; border: none; border-radius: 25px; padding: 12px 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);">
+                                Envoyer le message
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .form-control:focus {
+            border-color: var(--japanese-red);
+            box-shadow: 0 0 0 0.2rem rgba(220, 20, 60, 0.25);
+        }
+        .form-label {
+            color: var(--japanese-black);
+            margin-bottom: 0.5rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4) !important;
+        }
+        .form-control-lg {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .form-control-lg:hover {
+            border-color: var(--japanese-red);
+        }
+    </style>
+{% endblock %}
+

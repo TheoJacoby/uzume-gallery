@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie - Uzume Gallery{% endblock %}
+
+{% block body %}
+    <div class="text-center mb-5">
+        <h1 class="mb-3">Notre Collection</h1>
+        <p class="lead text-muted">Découvrez nos œuvres d'art exceptionnelles</p>
+    </div>
+    
+    {# Formulaire de recherche et filtres #}
+    <div class="card mb-4" style="border-radius: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border: none;">
+        <div class="card-body p-4">
+            <form method="get" action="{{ path('app_gallery') }}" class="row g-3 align-items-end">
+                {# Champ de recherche #}
+                <div class="col-md-4">
+                    <label for="search" class="form-label" style="font-weight: 600; color: var(--japanese-red);">
+                        🔍 Rechercher
+                    </label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="search" 
+                        name="search" 
+                        value="{{ currentSearch }}" 
+                        placeholder="Titre ou description..."
+                        style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 0.75rem; transition: all 0.3s ease;"
+                        onfocus="this.style.borderColor='var(--japanese-red)'; this.style.boxShadow='0 0 0 0.2rem rgba(220, 20, 60, 0.25)';"
+                        onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none';"
+                    >
+                </div>
+                
+                {# Filtre par catégorie #}
+                <div class="col-md-3">
+                    <label for="category" class="form-label" style="font-weight: 600; color: var(--japanese-red);">
+                        🎯 Catégorie
+                    </label>
+                    <select 
+                        class="form-select" 
+                        id="category" 
+                        name="category"
+                        style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 0.75rem; transition: all 0.3s ease;"
+                        onfocus="this.style.borderColor='var(--japanese-red)'; this.style.boxShadow='0 0 0 0.2rem rgba(220, 20, 60, 0.25)';"
+                        onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none';"
+                    >
+                        <option value="0">Toutes les catégories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {{ currentCategory == category.id ? 'selected' : '' }}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                {# Tri #}
+                <div class="col-md-2">
+                    <label for="sort" class="form-label" style="font-weight: 600; color: var(--japanese-red);">
+                        📊 Trier par
+                    </label>
+                    <select 
+                        class="form-select" 
+                        id="sortBy" 
+                        name="sortBy"
+                        style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 0.75rem; transition: all 0.3s ease;"
+                        onfocus="this.style.borderColor='var(--japanese-red)'; this.style.boxShadow='0 0 0 0.2rem rgba(220, 20, 60, 0.25)';"
+                        onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none';"
+                    >
+                        <option value="created" {{ currentSort == 'created' ? 'selected' : '' }}>Date</option>
+                        <option value="title" {{ currentSort == 'title' ? 'selected' : '' }}>Titre</option>
+                        <option value="category" {{ currentSort == 'category' ? 'selected' : '' }}>Catégorie</option>
+                    </select>
+                </div>
+                
+                {# Ordre #}
+                <div class="col-md-2">
+                    <label for="sortOrder" class="form-label" style="font-weight: 600; color: var(--japanese-red);">
+                        ↕️ Ordre
+                    </label>
+                    <select 
+                        class="form-select" 
+                        id="sortOrder" 
+                        name="sortOrder"
+                        style="border-radius: 10px; border: 2px solid #e0e0e0; padding: 0.75rem; transition: all 0.3s ease;"
+                        onfocus="this.style.borderColor='var(--japanese-red)'; this.style.boxShadow='0 0 0 0.2rem rgba(220, 20, 60, 0.25)';"
+                        onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none';"
+                    >
+                        <option value="DESC" {{ currentOrder == 'DESC' ? 'selected' : '' }}>Décroissant</option>
+                        <option value="ASC" {{ currentOrder == 'ASC' ? 'selected' : '' }}>Croissant</option>
+                    </select>
+                </div>
+                
+                {# Boutons d'action #}
+                <div class="col-md-1 d-flex gap-2">
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary flex-grow-1"
+                        style="background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%); border: none; border-radius: 10px; padding: 0.75rem; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3); transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(220, 20, 60, 0.4)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(220, 20, 60, 0.3)';"
+                        title="Rechercher"
+                    >
+                        🔍
+                    </button>
+                    {% if currentSearch or currentCategory %}
+                        <a 
+                            href="{{ path('app_gallery') }}" 
+                            class="btn btn-outline-secondary d-flex align-items-center justify-content-center"
+                            style="border-radius: 10px; padding: 0.75rem; min-width: 45px; transition: all 0.3s ease;"
+                            title="Réinitialiser les filtres"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='var(--japanese-red)'; this.style.color='var(--japanese-red)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#6c757d'; this.style.color='#6c757d';"
+                        >
+                            ✕
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {# Affichage des résultats #}
+    {% if paintings|length > 0 %}
+        <div class="mb-3">
+            <p class="text-muted">
+                <strong>{{ paintings.getTotalItemCount }}</strong> 
+                {{ paintings.getTotalItemCount > 1 ? 'œuvres trouvées' : 'œuvre trouvée' }}
+                {% if currentSearch %}
+                    pour "<strong>{{ currentSearch }}</strong>"
+                {% endif %}
+            </p>
+        </div>
+        <div class="row g-4">
+            {% for painting in paintings %}
+                <div class="col-md-4">
+                    <div class="card painting-card h-100">
+                        <div style="overflow: hidden; position: relative;">
+                            {% if painting.imageName %}
+                                <img src="{{ vich_uploader_asset(painting, 'imageFile') }}" class="card-img-top" alt="{{ painting.title }}" style="height: 280px; object-fit: cover; width: 100%;">
+                            {% else %}
+                                <img src="{{ asset('images/paintings/1.jpeg') }}" class="card-img-top" alt="{{ painting.title }}" style="height: 280px; object-fit: cover; width: 100%;">
+                            {% endif %}
+                            <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: #667eea;">
+                                {{ painting.category.name }}
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title" style="font-weight: 700; margin-bottom: 0.5rem;">{{ painting.title }}</h5>
+                            <p class="card-text text-muted" style="font-size: 0.9rem; margin-bottom: 1rem;">
+                                <small>{{ painting.created|date('d/m/Y') }}</small>
+                            </p>
+                            <p class="card-text flex-grow-1" style="color: #4a5568; line-height: 1.6;">{{ painting.description|slice(0, 100) }}...</p>
+                            <a href="{{ path('app_gallery_show', {id: painting.id}) }}" class="btn btn-primary mt-3" style="width: 100%;">Voir les détails →</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        {# Pagination #}
+        <div class="d-flex justify-content-center mt-5">
+            {{ knp_pagination_render(paintings) }}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" style="border-radius: 20px; padding: 3rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎨</div>
+            <h4>
+                {% if currentSearch or currentCategory %}
+                    Aucune œuvre ne correspond à votre recherche
+                {% else %}
+                    Aucune peinture publiée pour le moment
+                {% endif %}
+            </h4>
+            <p class="mb-0">
+                {% if currentSearch or currentCategory %}
+                    Essayez de modifier vos critères de recherche ou 
+                    <a href="{{ path('app_gallery') }}" style="color: var(--japanese-red); font-weight: 600;">réinitialiser les filtres</a>.
+                {% else %}
+                    Revenez bientôt pour découvrir notre collection !
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+

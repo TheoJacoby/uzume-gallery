@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Commentaires{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Gestion des Commentaires</h1>
+        <a href="{{ path('admin_painting_index') }}" class="btn btn-secondary">Retour aux peintures</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Peinture</th>
+                    <th>Contenu</th>
+                    <th>Note</th>
+                    <th>Date</th>
+                    <th>Visible</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.painting.title }}</td>
+                        <td>{{ comment.content|slice(0, 100) }}{% if comment.content|length > 100 %}...{% endif %}</td>
+                        <td>
+                            {% for i in 1..5 %}
+                                {% if i <= comment.rating %}
+                                    ⭐
+                                {% else %}
+                                    ☆
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
+                        <td>
+                            <form method="post" action="{{ path('admin_comment_toggle_visibility', {id: comment.id}) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ comment.id) }}">
+                                <button type="submit" class="btn btn-sm btn-link p-0">
+                                    {% if comment.isVisible %}
+                                        <span class="badge bg-success">Visible</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Masqué</span>
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{{ path('app_gallery_show', {id: comment.painting.id}) }}" class="btn btn-sm btn-info">Voir la peinture</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Aucun commentaire trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+

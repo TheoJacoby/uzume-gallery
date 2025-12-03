@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès Refusé - Uzume Gallery{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+            <div class="col-md-8 col-lg-6 text-center">
+                <div class="card" style="border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); border: none; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+                    <div class="card-body p-5">
+                        {# Icône ou emoji #}
+                        <div style="font-size: 6rem; margin-bottom: 2rem; animation: bounce 2s infinite;">
+                            🚫
+                        </div>
+                        
+                        <h1 class="mb-4" style="color: var(--japanese-red); font-weight: 800; font-size: 2.5rem;">
+                            Accès Refusé
+                        </h1>
+                        
+                        <p class="lead mb-4" style="color: #4a5568; line-height: 1.8;">
+                            Désolé, vous n'avez pas les permissions nécessaires pour accéder à cette page.
+                        </p>
+                        
+                        {% if app.user %}
+                            <div class="alert alert-info mb-4" style="border-radius: 15px; background: rgba(220, 20, 60, 0.1); border: 2px solid rgba(220, 20, 60, 0.3);">
+                                <p class="mb-0" style="color: var(--japanese-red); font-weight: 600;">
+                                    <strong>Connecté en tant que :</strong> {{ app.user.email }}<br>
+                                    <small style="color: #6c757d;">Rôle actuel : {{ app.user.roles[0] }}</small>
+                                </p>
+                            </div>
+                            <p class="text-muted mb-4">
+                                Cette zone est réservée aux administrateurs. Si vous pensez que c'est une erreur, 
+                                veuillez contacter un administrateur.
+                            </p>
+                        {% else %}
+                            <div class="alert alert-warning mb-4" style="border-radius: 15px; background: rgba(255, 193, 7, 0.1); border: 2px solid rgba(255, 193, 7, 0.3);">
+                                <p class="mb-0" style="color: #856404; font-weight: 600;">
+                                    Vous n'êtes pas connecté.
+                                </p>
+                            </div>
+                            <p class="text-muted mb-4">
+                                Veuillez vous connecter avec un compte administrateur pour accéder à cette zone.
+                            </p>
+                        {% endif %}
+                        
+                        <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                            {% if app.user %}
+                                <a href="{{ path('app_home') }}" class="btn btn-primary" style="background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%); border: none; border-radius: 20px; padding: 0.75rem 2rem; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3); transition: all 0.3s ease;">
+                                    🏠 Retour à l'accueil
+                                </a>
+                                <a href="{{ path('app_gallery') }}" class="btn btn-outline-primary" style="border-color: var(--japanese-red); color: var(--japanese-red); border-radius: 20px; padding: 0.75rem 2rem; font-weight: 600; transition: all 0.3s ease;">
+                                    🎨 Voir la galerie
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="btn btn-primary" style="background: linear-gradient(135deg, var(--japanese-red) 0%, var(--japanese-red-dark) 100%); border: none; border-radius: 20px; padding: 0.75rem 2rem; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3); transition: all 0.3s ease;">
+                                    🔐 Se connecter
+                                </a>
+                                <a href="{{ path('app_home') }}" class="btn btn-outline-primary" style="border-color: var(--japanese-red); color: var(--japanese-red); border-radius: 20px; padding: 0.75rem 2rem; font-weight: 600; transition: all 0.3s ease;">
+                                    🏠 Retour à l'accueil
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4) !important;
+        }
+        
+        .btn-outline-primary:hover {
+            transform: translateY(-2px);
+            background: var(--japanese-red) !important;
+            color: white !important;
+            border-color: var(--japanese-red) !important;
+        }
+    </style>
+{% endblock %}
+

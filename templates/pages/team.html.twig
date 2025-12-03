@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Équipe - Uzume Gallery{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center mb-5">
+                <h1 class="mb-3">Notre Équipe</h1>
+                <p class="lead text-muted">Rencontrez les passionnés qui font vivre Uzume Gallery</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{{ asset('images/team/directeur.jpeg') }}" alt="Directeur Artistique" class="team-avatar">
+                        <h5 class="card-title" style="color: var(--japanese-red); font-weight: 700;">Yuki Tanaka</h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">Directeur Artistique</p>
+                        <p class="card-text" style="line-height: 1.8; color: #4a5568;">
+                            Expert en histoire de l'art avec plus de 20 ans d'expérience dans la curation
+                            et la sélection d'œuvres d'art exceptionnelles. Spécialisé dans l'art contemporain japonais.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{{ asset('images/team/conservatrice.jpeg') }}" alt="Conservatrice" class="team-avatar">
+                        <h5 class="card-title" style="color: var(--japanese-red); font-weight: 700;">Sakura Yamamoto</h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">Conservatrice</p>
+                        <p class="card-text" style="line-height: 1.8; color: #4a5568;">
+                            Spécialiste de la préservation et de la restauration d'œuvres d'art,
+                            garantissant la qualité et l'authenticité de notre collection avec une approche traditionnelle japonaise.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{{ asset('images/team/resp_comm.jpeg') }}" alt="Responsable Communication" class="team-avatar">
+                        <h5 class="card-title" style="color: var(--japanese-red); font-weight: 700;">Hiroshi Matsumoto</h5>
+                        <p class="text-muted mb-3" style="font-size: 0.9rem;">Responsable Communication</p>
+                        <p class="card-text" style="line-height: 1.8; color: #4a5568;">
+                            En charge de la promotion de notre galerie et de la création de liens
+                            avec les artistes et les amateurs d'art du monde entier, avec une vision internationale.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

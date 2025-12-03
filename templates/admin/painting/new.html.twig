@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Peinture - Administration{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Créer une nouvelle peinture</h1>
+
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                    {{ form_errors(form.description) }}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form_label(form.height) }}
+                        {{ form_widget(form.height) }}
+                        {{ form_errors(form.height) }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form_label(form.width) }}
+                        {{ form_widget(form.width) }}
+                        {{ form_errors(form.width) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.created) }}
+                    {{ form_widget(form.created) }}
+                    {{ form_errors(form.created) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    {{ form_label(form.imageFile) }}
+                    {{ form_widget(form.imageFile.file, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.imageFile) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+                    {{ form_errors(form.category) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.techniques) }}
+                    {{ form_widget(form.techniques) }}
+                    {{ form_errors(form.techniques) }}
+                </div>
+                <div class="mb-3 form-check">
+                    {{ form_widget(form.isPublished) }}
+                    {{ form_label(form.isPublished) }}
+                    {{ form_errors(form.isPublished) }}
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Créer</button>
+            <a href="{{ path('admin_painting_index') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+

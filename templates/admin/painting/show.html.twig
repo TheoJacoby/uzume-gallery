@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ painting.title }} - Administration{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ painting.title }}</h1>
+        <div>
+            <a href="{{ path('admin_painting_edit', {id: painting.id}) }}" class="btn btn-warning">Modifier</a>
+            <a href="{{ path('admin_painting_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {% if painting.imageName %}
+                <img src="{{ vich_uploader_asset(painting, 'imageFile') }}" class="img-fluid rounded" alt="{{ painting.title }}">
+            {% else %}
+                <img src="{{ asset('images/paintings/1.jpeg') }}" class="img-fluid rounded" alt="Image par défaut">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ painting.title }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ painting.description }}</td>
+                </tr>
+                <tr>
+                    <th>Date de création</th>
+                    <td>{{ painting.created|date('d/m/Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Dimensions</th>
+                    <td>{{ painting.width }} cm × {{ painting.height }} cm</td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td>{{ painting.category.name }}</td>
+                </tr>
+                <tr>
+                    <th>Techniques</th>
+                    <td>
+                        {% for technique in painting.techniques %}
+                            {{ technique.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Publié</th>
+                    <td>
+                        {% if painting.isPublished %}
+                            <span class="badge bg-success">Oui</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Non</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
